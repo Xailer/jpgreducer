@@ -162,7 +162,7 @@ METHOD CreateForm( lCreate ) CLASS TForm1
    END
 
    WITH OBJECT ::oImage1 := TImage():New( Self )
-      :SetBounds( 412, 288, 48, 48 )
+      :SetBounds( 412, 280, 48, 48 )
       :lTransparent := .T.
       :nBorderStyle := bvNONE
       :oPicture := "Xailer"

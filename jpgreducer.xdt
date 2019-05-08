@@ -1,0 +1,6 @@
+[OPTIONS]
+LockControls=.F.
+[DESKTOP]
+1=jpgreducer.prg,12,42,12,42,0,0,400
+2=Form1.prg,0,0,0,0,0,0,728
+Current=2
