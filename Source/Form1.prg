@@ -13,6 +13,7 @@ CLASS TForm1 FROM TForm
 
    DATA lWorking INIT .F.
    DATA lStop    INIT .F.
+   DATA lPaPedro INIT .F.
 
    DATA lPana INIT .F.
 
