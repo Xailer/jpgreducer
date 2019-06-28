@@ -1,0 +1,5 @@
+[OPTIONS]
+LockControls=.F.
+[DESKTOP]
+1=Form1.prg,0,0,0,0,0,0,728
+Current=1
