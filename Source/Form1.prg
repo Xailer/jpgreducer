@@ -36,6 +36,7 @@ CLASS TForm1 FROM TForm
    COMPONENT oHyperLink1
    COMPONENT oNotifyIcon1
    COMPONENT oChkEqualDate
+   COMPONENT oLabel1
 
    METHOD CreateForm()
    METHOD EditBtn1BtnClick( oSender, Value )

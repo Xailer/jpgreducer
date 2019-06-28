@@ -1,0 +1,180 @@
+METHOD CreateForm( lCreate ) CLASS TForm1
+
+   IF lCreate
+      ::SetBounds( 609, 262, 508, 415 )
+      ::SetClientSize( 492, 376 )
+      ::cText := "JPG size reducer"
+      ::oFont := TFont():Create( "MS Sans Serif", 8, 0, 400 )
+      ::lCentered := .T.
+      ::lMaximizeBox := .F.
+      ::OnClose := "FormClose"
+      ::OnInitialize := "FormInitialize"
+      ::Create()
+   ENDIF
+   ::Super:CreateForm( .F. )
+
+   WITH OBJECT ::oBrowseForFolderDlg1 := TBrowseForFolderDlg():New( Self )
+      :lForceCreate := .T.
+      :cText := "JPG Reducer"
+      :cTitle := "Choose directory:"
+      :lExtendedUI := .T.
+      :lNoNewFolderButton := .T.
+      :lReturnFSAncestors := .T.
+      :lReturnFSDirs := .T.
+      :lValidate := .T.
+      :lCenter := .T.
+      :Create()
+   END
+
+   WITH OBJECT ::oBrowseForFolderDlg2 := TBrowseForFolderDlg():New( Self )
+      :lForceCreate := .T.
+      :cText := "JPG Reducer"
+      :cTitle := "Choose directory:"
+      :lExtendedUI := .T.
+      :lValidate := .T.
+      :lCenter := .T.
+      :Create()
+   END
+
+   ::oNotifyIcon1 := TNotifyIcon():Create( Self )
+
+   WITH OBJECT ::oGroupBox1 := TGroupBox():New( Self )
+      :SetBounds( 12, 16, 374, 150 )
+      :cText := "Directories"
+      :Create()
+   END
+
+      WITH OBJECT ::oEdSource := TEditBtn():New( ::oGroupBox1 )
+         :SetBounds( 12, 44, 342, 20 )
+         :nMaxLength := -1
+         :nStyle := ebDOTS
+         :OnBtnClick := "EditBtn1BtnClick"
+         :Create()
+      END
+
+      WITH OBJECT ::oEdTarget := TEditBtn():New( ::oGroupBox1 )
+         :SetBounds( 12, 88, 342, 20 )
+         :nMaxLength := -1
+         :nStyle := ebDOTS
+         :OnBtnClick := "EdTargetBtnClick"
+         :Create()
+      END
+
+      WITH OBJECT ::oLabelBuddy1 := TLabelBuddy():New( ::oGroupBox1 )
+         :SetBounds( 12, 29, 38, 14 )
+         :cText := "Source:"
+         :nBuddyAlign := baTOPLEFT
+         :nBuddyOffset := 15
+         :oBuddy := ::oEdSource
+         :Create()
+      END
+
+      WITH OBJECT ::oLabelBuddy2 := TLabelBuddy():New( ::oGroupBox1 )
+         :SetBounds( 12, 73, 35, 14 )
+         :cText := "Target:"
+         :nBuddyAlign := baTOPLEFT
+         :nBuddyOffset := 15
+         :oBuddy := ::oEdTarget
+         :Create()
+      END
+
+      WITH OBJECT ::oChkRecur := TCheckbox():New( ::oGroupBox1 )
+         :SetBounds( 12, 120, 222, 18 )
+         :cText := "Include subdirectories"
+         :lChecked := .T.
+         :Create()
+      END
+
+   WITH OBJECT ::oGroupBox2 := TGroupBox():New( Self )
+      :SetBounds( 12, 172, 374, 90 )
+      :cText := "Options"
+      :Create()
+   END
+
+      WITH OBJECT ::oEdWidth := TMaskEdit():New( ::oGroupBox2 )
+         :SetBounds( 88, 28, 54, 20 )
+         :nAlignment := taRIGHT
+         :nMaxLength := 7
+         :cPicture := "@E 999,999"
+         :Value := 2048
+         :Create()
+      END
+
+      WITH OBJECT ::oLabelBuddy4 := TLabelBuddy():New( ::oGroupBox2 )
+         :SetBounds( 13, 31, 74, 14 )
+         :cText := "Max dimension:"
+         :nBuddyOffset := 75
+         :oBuddy := ::oEdWidth
+         :Create()
+      END
+
+      WITH OBJECT ::oChkExclude := TCheckbox():New( ::oGroupBox2 )
+         :SetBounds( 148, 29, 218, 18 )
+         :cText := "Exclude images below selected dimension"
+         :Create()
+      END
+
+      WITH OBJECT ::oChkEqualDate := TCheckbox():New( ::oGroupBox2 )
+         :SetBounds( 12, 60, 346, 18 )
+         :cText := "Set file date && time equal to photo capture date && time"
+         :lChecked := .T.
+         :Create()
+      END
+
+   WITH OBJECT ::oGroupBox3 := TGroupBox():New( Self )
+      :SetBounds( 12, 268, 374, 94 )
+      :cText := "Progress"
+      :Create()
+   END
+
+      WITH OBJECT ::oLabelBuddy3 := TLabelBuddy():New( ::oGroupBox3 )
+         :SetBounds( 12, 21, 20, 14 )
+         :cText := "File:"
+         :nBuddyAlign := baTOPLEFT
+         :nBuddyOffset := 15
+         :Create()
+      END
+
+      WITH OBJECT ::oEdFile := TNoEdit():New( ::oGroupBox3 )
+         :SetBounds( 12, 36, 354, 20 )
+         :Create()
+      END
+
+      WITH OBJECT ::oLblCounter := TLabel():New( ::oGroupBox3 )
+         :SetBounds( 264, 16, 101, 14 )
+         :cText := "0"
+         :nClrText := clFuchsia
+         :nAlignment := taRIGHT
+         :lAutoSize := .F.
+         :Create()
+      END
+
+      WITH OBJECT ::oProgress := TProgressBar():New( ::oGroupBox3 )
+         :SetBounds( 12, 64, 354, 18 )
+         :Create()
+      END
+
+   WITH OBJECT ::oBtnStart := TButton():New( Self )
+      :SetBounds( 400, 20, 80, 25 )
+      :cText := "Start"
+      :OnClick := "BtnStartClick"
+      :Create()
+   END
+
+   WITH OBJECT ::oImage1 := TImage():New( Self )
+      :SetBounds( 412, 288, 48, 48 )
+      :lTransparent := .T.
+      :nBorderStyle := bvNONE
+      :oPicture := "Xailer"
+      :lAutoFit := .T.
+      :Create()
+   END
+
+   WITH OBJECT ::oHyperLink1 := THyperLink():New( Self )
+      :SetBounds( 400, 340, 78, 14 )
+      :cText := "Wrritten in Xailer"
+      :cURL := "http://www.xailer.com"
+      :Create()
+   END
+
+RETURN Self
