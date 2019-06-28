@@ -13,6 +13,9 @@ CLASS TForm1 FROM TForm
 
    DATA lWorking INIT .F.
    DATA lStop    INIT .F.
+   DATA lPaPedro INIT .F.
+
+   DATA lPana INIT .F.
 
    COMPONENT oGroupBox1
    COMPONENT oEdSource
@@ -290,3 +293,6 @@ METHOD FormInitialize( oSender ) CLASS TForm1
 RETURN Nil
 
 //------------------------------------------------------------------------------
+
+FUNCTION Pana()
+RETURN NIL
